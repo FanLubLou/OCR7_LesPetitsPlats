@@ -4,15 +4,69 @@
 /*****************************************
 * BODY
 *****************************************/
+body{
+    margin:0 auto;
+    max-width: 1440px;
+
+}
     /***********************************
     * HEADER
     ***********************************/
+.header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    padding: 40px 69px;    
+}
+.header::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(assets/images/img-header.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
         /*********
         * LOGO
         *********/
+.logoContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 7.282px;
+}
+header img{
+    width: 180px;
+}
+.circleOutside{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: white;
+    
+}
+.circleInside{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: white;
+}
+
         /************************
         * HEADER CONTENT
         ************************/
+
         /*********
         * INSTRUCTION RECHERCHE
         *********/
