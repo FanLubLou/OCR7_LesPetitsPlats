@@ -1,13 +1,17 @@
 /*****************************************
 * INITIALISATION & ELEMENTS GLOBAUX
 *****************************************/
+:root {
+    --JAUNE: #FFD15B;
+}
 /*****************************************
 * BODY
 *****************************************/
 body{
     margin:0 auto;
     max-width: 1440px;
-
+    font-style: normal;
+    font-weight: 400;
 }
     /***********************************
     * HEADER
@@ -66,13 +70,30 @@ header img{
         /************************
         * HEADER CONTENT
         ************************/
-
-        /*********
-        * INSTRUCTION RECHERCHE
-        *********/
+.headerContent{
+    margin:auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 29px;
+    padding-left: 249px; 
+    padding-right: 249px; 
+}       
         /*********
         * BARRE DE RECHERCHE
         *********/
+.headerTextContent{
+    color: var(--JAUNE);
+    font-family: 'Anton', sans-serif;
+    font-size: 2.75rem;
+    overflow: hidden;
+    text-align: center;
+    width: 890px;
+    
+
+}
+
         /*********
         * LOUPE RECHERCHE
         *********/
