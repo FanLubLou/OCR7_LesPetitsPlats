@@ -2,8 +2,15 @@
 * INITIALISATION & ELEMENTS GLOBAUX
 *****************************************/
 :root {
-    --JAUNE: #FFD15B;
+    --YELLOW: #FFD15B;
+    --GREY: #7A7A7A;
+    --BLACK: #1B1B1B;
+    --BACKGROUND: #EDEDED;
 }
+* {
+    box-sizing: border-box;
+  }
+
 /*****************************************
 * BODY
 *****************************************/
@@ -12,38 +19,33 @@ body{
     max-width: 1440px;
     font-style: normal;
     font-weight: 400;
+    
 }
     /***********************************
     * HEADER
     ***********************************/
 .header {
-    position: relative;
     display: flex;
     flex-direction: column;
-    height: 60vh;
-    padding: 40px 69px;    
-}
-.header::after {
-    content: "";
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(assets/images/img-header.jpeg);
-    background-position: center;
+    height: 50vh;
+    padding: 40px 69px; 
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+        url(assets/images/img-header.jpeg);
+    background-position: center 75%;
     background-repeat: no-repeat;
-    background-size: cover;    
+    background-size: cover;
+          
 }
+
         /*********
         * LOGO
         *********/
 .logoContainer{
     display: flex;
     flex-direction: row;
-    align-items: baseline;
-    gap: 7.282px;
+    align-items: center;
+    gap: 0.455rem;
 }
 header img{
     width: 180px;
@@ -63,7 +65,7 @@ header img{
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 2px solid black;
+    border: 2.5px solid black;
     background-color: white;
 }
 
@@ -74,38 +76,87 @@ header img{
     margin:auto; 
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 29px;
-    padding-left: 249px; 
-    padding-right: 249px; 
+    gap: 1.813rem;
+    /* padding-left: 249px; 
+    padding-right: 249px;  */
 }       
         /*********
         * BARRE DE RECHERCHE
         *********/
 .headerTextContent{
-    color: var(--JAUNE);
+    color: var(--YELLOW);
     font-family: 'Anton', sans-serif;
     font-size: 2.75rem;
     overflow: hidden;
     text-align: center;
-    width: 890px;
-    
-
+    width: 720px;  
 }
 
         /*********
         * LOUPE RECHERCHE
         *********/
+.headerSearchBar{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    width: 954px;
+    height: 4.25rem;
+}
+.headerSearchBar input{
+    width: 100%;
+    height: 100%;
+    border-radius: 11px;
+    padding: 25px 35px;
+    font-family: 'Manrope',sans-serif;;
+    font-size: 1rem;
+    color: var(--GREY);
+    margin-right: -10px;
+}
+.glassContainer{
+    position: absolute;
+    height: 51px;
+    width: 51px;
+    border-radius: 10px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    color: white;   
+}
+.glassContainer:hover{
+    background-color: var(--YELLOW);
+    color: black;
+}
+.fa-magnifying-glass{
+    
+    font-size: 2rem;
+    /* font-weight:100 ; */
+}
+
     /***********************************
     * MAIN
     ***********************************/
+.main{
+    background-color: var(--BACKGROUND);
+    height: 100%;
+    width: 100%;
+    padding: 10px 6.25rem;
+}
         /************************
         * FIRSTSECTION_SEARCH_CRITERIAS
         ************************/
             /************************
             * CRITERIA SELECTION DISPLAY
             ************************/
+.firstSection_searchCriterias{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
                 /*********
                 * INGREDIENTS
                 *********/
@@ -115,15 +166,45 @@ header img{
                 /*********
                 * USTENSILES
                 *********/
+
+
+.ChoiceBoxesContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 4.125rem;
+}
+.ChoiceBoxes{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    width: 12.188rem;
+    background-color: white;
+    border-radius: 11px;
+    color: var(--BLACK)
+}
+
             /************************
             * RECEPIES COUNTS DISPLAY
             ************************/
+.RecipeCount{
+    color: var(--BLACK);
+    font-size: 1.313rem;
+    font-family: 'Anton', sans-serif;
+}
         /************************
         * SECONDSECTION_SELECTED CRITERIAS
         ************************/ 
-           /************************
+            /************************
             * CRITERIA SELECTED DISPLAY
             ************************/
+.secondSection_selectedCriterias{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    flex-wrap: wrap;
+         
+}           
                 /*********
                 * INGREDIENTS
                 *********/
@@ -133,6 +214,18 @@ header img{
                 /*********
                 * USTENSILES
                 *********/
+.DisplayChoiceBoxes{
+    display: flex;
+    width: 12.5rem;
+    background-color: var(--YELLOW);
+    color: black;
+    padding: 1.063rem 1.125rem;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-top: 1.313rem;
+    font-family: 'Manrope',sans-serif;
+}
+
         /************************
         * THIRDSECTION_RECIPES DISPLAY IN GRID
         ************************/

@@ -8,6 +8,8 @@
     <!-- font -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/06cf8953cf.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <title>LesPetitsPlats_JC</title>    
 </head>
@@ -20,15 +22,88 @@
             </div>
         </div>
         <div class="headerContent">
-            <span class="headerTextContent">CHERCHEZ PARMI PLUS DE 1500 RECETTES</span>
-            <span class="headerTextContent">DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
-            <div class="headerSearchBar"></div>
+            <span class="headerTextContent">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
+            <div class="headerSearchBar">
+                <input type="search" id="search-recipe" placeholder="Rechercher une recette, un ingrédient,...">
+                <div class="glassContainer">    
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>    
+            </div>
         </div>        
     </header>
-    <main>
-        <div class="firstSection_searchCriterias"></div>
-        <div class="secondSection_selectedCriterias"></div>
-        <div class="thirdSection_recipesDisplay"></div>     
+    <main class="main">
+        <section class="firstSection_searchCriterias">
+            <div class="ChoiceBoxesContainer">
+                <div class="ChoiceBoxes">
+                    <span class="ChoiceBoxesText">Ingrédients</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="ChoiceBoxes">
+                    <span class="ChoiceBoxesText">Appareils</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="ChoiceBoxes">
+                    <span class="ChoiceBoxesText">Ustensiles</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+            <span class="RecipeCount">1500 Recettes</span>
+        </section>
+        <section class="secondSection_selectedCriterias">
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+            <div class="DisplayChoiceBoxes">
+                <span class="DisplayChoiceBoxesText">Crème de coco</span>
+                <span class="DisplayChoiceBoxesClose">X</span>
+            </div>
+        </section>
+        <section class="thirdSection_recipesDisplay"></section>     
     </main>   
 </body>
 </html>
