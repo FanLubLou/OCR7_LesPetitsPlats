@@ -9,6 +9,8 @@
 }
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
 /*****************************************
@@ -217,6 +219,7 @@ header img{
 .DisplayChoiceBoxes{
     display: flex;
     width: 12.5rem;
+    flex-wrap: nowrap;
     background-color: var(--YELLOW);
     color: black;
     padding: 1.063rem 1.125rem;
@@ -225,31 +228,121 @@ header img{
     margin-top: 1.313rem;
     font-family: 'Manrope',sans-serif;
 }
+.DisplayChoiceBoxes span {
+    max-width: 8.75rem;
+}
 
         /************************
         * THIRDSECTION_RECIPES DISPLAY IN GRID
         ************************/
+.thirdSection_recipesDisplay{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2.688rem;
+    margin-top: 2.688rem;
+}
                 /*********
                 * ARTICLES_RECIPE CARD
                 *********/
+                    
+.recipeCard{
+    width: 23.75rem;
+    height: 46rem;
+    border: blue solid;
+    position: relative;
+    border-radius: 21px;
+    background-color: white;
+}
                     /*********
                     * RECIPE PICTURE
                     *********/
-                         /*********
+.recipeCard img{
+    width: 100%;
+    height:33%;
+    object-fit: cover;
+}
+                        /*********
                         * RECIPE COOKING TIME
                         *********/
-                        /*********
-                        * RECIPE PICTURE
-                        *********/                           
+.cookingTimeContainer{
+    display: flex;
+    justify-content: center;
+    width: 4rem;
+    background-color: var(--YELLOW);
+    border-radius: 14px;
+    position: absolute;
+    right: 1.313rem;
+    top: 1.313rem;
+    padding: 5px 15px;    
+}
+                
                     /*********
                     * RECIPE TEXT CONTEXT
                     *********/
+.recipeTextContent{
+    padding: 32px 25px 61px;
+}
                         /*********
                         * RECIPE TEXT CONTEXT _ TITLE
                         **********/
+.recipeTextContent h1{
+    color: black;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.125rem;
+    font-style: normal;
+    margin-bottom: 29px;
+}
+.recipeContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}                      
                         /*********
                         * RECIPE TEXT CONTEXT _ DEFINITION
                         **********/
+.recipeTextContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--GREY);
+    letter-spacing: 1.08px;
+} 
+.recipeTextContainer p{
+    font-size: 0.875rem;
+    color: var(--BLACK)
+}   
                         /*********
                         * RECIPE TEXT CONTEXT _ INGREDIENTS
                         **********/
+.recipeIngredientContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.recipeIngredientBoxContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.313rem;
+}
+.ingredientsBox{
+    display: flex;
+    flex-direction: column;
+}
+.IngredientsBoxTitle{
+    font-weight: 500;
+    font-family: 'Manrop', sans-serif;
+    font-size: 0.75rem;
+    color: var(--BLACK);
+}
+.IngredientsBoxInfo{
+    color: var(--GREY);
+    font-family: 'Manrop', sans-serif;
+    font-size: 0.75rem;
+}                        
