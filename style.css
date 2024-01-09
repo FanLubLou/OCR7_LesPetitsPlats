@@ -247,12 +247,14 @@ header img{
                 *********/
                     
 .recipeCard{
+    
     width: 23.75rem;
     height: 46rem;
-    border: blue solid;
     position: relative;
     border-radius: 21px;
     background-color: white;
+    
+    
 }
                     /*********
                     * RECIPE PICTURE
@@ -261,6 +263,8 @@ header img{
     width: 100%;
     height:33%;
     object-fit: cover;
+    border-top-right-radius: 21px;
+    border-top-left-radius: 21px;
 }
                         /*********
                         * RECIPE COOKING TIME
@@ -282,7 +286,28 @@ header img{
                     *********/
 .recipeTextContent{
     padding: 32px 25px 61px;
+    overflow-y: scroll;
+    max-height: 29.8rem;
 }
+                        /*********
+                        * SCROLLBAR
+                        **********/
+
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+background-color: #fff;
+}
+::-webkit-scrollbar-thumb {
+background-color: #7A7A7A;
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+background-color: #FFD15B;
+}
+
                         /*********
                         * RECIPE TEXT CONTEXT _ TITLE
                         **********/
@@ -295,8 +320,10 @@ header img{
 }
 .recipeContainer{
     display: flex;
+    font-family: 'Manrope', sans-serif;
     flex-direction: column;
     gap: 32px;
+    
 }                      
                         /*********
                         * RECIPE TEXT CONTEXT _ DEFINITION
@@ -305,6 +332,7 @@ header img{
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 }
 h2 {
     font-family: 'Manrope', sans-serif;
@@ -338,11 +366,14 @@ h2 {
 .IngredientsBoxTitle{
     font-weight: 500;
     font-family: 'Manrop', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: var(--BLACK);
+    line-height: normal;
+    margin-bottom: 0.313rem;
 }
 .IngredientsBoxInfo{
     color: var(--GREY);
     font-family: 'Manrop', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    line-height: normal;
 }                        
