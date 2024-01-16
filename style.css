@@ -4,6 +4,7 @@
 :root {
     --YELLOW: #FFD15B;
     --GREY: #7A7A7A;
+    --LIGHTGREY: #c6c6c6;
     --BLACK: #1B1B1B;
     --BACKGROUND: #EDEDED;
 }
@@ -13,6 +14,42 @@
     padding: 0;
   }
 
+li{
+    list-style-type: none;
+    line-height: 2;
+}
+/*********
+* SCROLLBAR
+**********/
+/* Pour navigateur tels que chrome, safari, ... */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+background-color: #fff;
+}
+::-webkit-scrollbar-thumb {
+background-color: var(--GREY);
+border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+background-color: var(--YELLOW);
+}
+/* Pour navigateur tels que IE et Microsoft Edge ... */
+::-ms-scrollbar {
+    width: 10px;
+}
+::-ms-scrollbar-track {
+background-color: #fff;
+}
+::-ms-scrollbar-thumb {
+background-color: var(--GREY);
+border-radius: 10px;
+}
+::-ms-scrollbar-thumb:hover {
+background-color: var(--YELLOW);
+}
+
 /*****************************************
 * BODY
 *****************************************/
@@ -20,8 +57,7 @@ body{
     margin:0 auto;
     max-width: 1440px;
     font-style: normal;
-    font-weight: 400;
-    
+    font-weight: 400;    
 }
     /***********************************
     * HEADER
@@ -79,9 +115,7 @@ header img{
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 1.813rem;
-    /* padding-left: 249px; 
-    padding-right: 249px;  */
+    gap: 1.813rem;    
 }       
         /*********
         * BARRE DE RECHERCHE
@@ -135,7 +169,6 @@ header img{
 .fa-magnifying-glass{
     
     font-size: 2rem;
-    /* font-weight:100 ; */
 }
 
     /***********************************
@@ -174,17 +207,99 @@ header img{
     display: flex;
     flex-direction: row;
     gap: 4.125rem;
+    overflow: hidden;
+    
 }
 .ChoiceBoxes{
-    display: flex;
-    padding: 1rem;
-    justify-content: space-between;
-    width: 12.188rem;
+    width: 12.188rem;    
     background-color: white;
     border-radius: 11px;
-    color: var(--BLACK)
+    padding: 1rem;
+    max-height: 50px;    
 }
 
+.ChoiceBoxesContent{     
+    gap: 100px;
+    
+}
+.ChoiceBoxesFirstLign{
+    display: flex;     
+    justify-content: space-between;    
+    color: var(--BLACK);
+    margin-bottom: 20px;
+}
+
+.rectangleContainer{
+    display: flex;
+    border: 1px solid var(--GREY);
+    width: 200px;
+    height: 36px;
+    border-radius: 2px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 5px;
+}
+
+.rectangleContainer input{
+    border: none;
+    outline: none;
+    width: 100%;
+    color: var(--GREY);
+   }
+
+.specificSearch{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+/*********
+* LA LOUPE SPECIFIQUE
+*********/
+
+.ico-mglass {
+    position:relative;
+    display:inline-block;
+    background: #fff;
+    border-radius: 30px;
+    height: 10px;
+    width: 10px;
+    border: 2px solid var(--GREY);
+    
+    &:after {
+      content: "";
+      height: 2px;
+      width: 6px;
+      background: var(--GREY);
+      position:absolute;
+      top:7px;
+      left:5px;
+      transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+    }
+    
+  }
+  
+
+
+.listSuggestions{
+    max-height: 140px;
+    overflow: hidden;
+    overflow-y: scroll;
+    font-style: 'manrope', sans-serif;
+    color: var(--BLACK);
+    font-size: 0.875rem;
+}
+.active {
+    max-height: 250px;     
+}
+.rotate {
+    transform: rotate(180deg);
+}
             /************************
             * RECEPIES COUNTS DISPLAY
             ************************/
@@ -204,8 +319,7 @@ header img{
     display: flex;
     flex-direction: row;
     column-gap: 0.5rem;
-    flex-wrap: wrap;
-         
+    flex-wrap: wrap;         
 }           
                 /*********
                 * INGREDIENTS
@@ -246,14 +360,12 @@ header img{
                 * ARTICLES_RECIPE CARD
                 *********/
                     
-.recipeCard{
-    
+.recipeCard{    
     width: 23.75rem;
     height: 46rem;
     position: relative;
     border-radius: 21px;
-    background-color: white;
-    
+    background-color: white;    
     
 }
                     /*********
@@ -289,24 +401,7 @@ header img{
     overflow-y: scroll;
     max-height: 29.8rem;
 }
-                        /*********
-                        * SCROLLBAR
-                        **********/
 
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-background-color: #fff;
-}
-::-webkit-scrollbar-thumb {
-background-color: #7A7A7A;
-border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-background-color: #FFD15B;
-}
 
                         /*********
                         * RECIPE TEXT CONTEXT _ TITLE

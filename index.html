@@ -34,17 +34,38 @@
     <main class="main">
         <section class="firstSection_searchCriterias">
             <div class="ChoiceBoxesContainer">
-                <div class="ChoiceBoxes">
-                    <span class="ChoiceBoxesText">Ingrédients</span>
-                    <i class="fa-solid fa-chevron-down"></i>
+                <div class="ChoiceBoxes" id="ingredients">
+                    <div class="ChoiceBoxesContent" >
+                        <div class="ChoiceBoxesFirstLign" id="FirstLign_Ingredients">
+                            <span class="ChoiceBoxesText">Ingrédients</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="specificSearch">
+                            <div class="rectangleContainer">
+                                <input type="search">                                
+                                <div class="glassMagnifierContainer">
+                                    <span class="ico ico-mglass"></span>
+                                </div>    
+                            </div>                                    
+                        </div>                      
+                        <div class="listSuggestions" id="listSuggestions"></div>
+                    </div>        
                 </div>
-                <div class="ChoiceBoxes">
-                    <span class="ChoiceBoxesText">Appareils</span>
-                    <i class="fa-solid fa-chevron-down"></i>
+                <div class="ChoiceBoxes" id="Appareils">
+                    <div class="ChoiceBoxesContent">
+                        <div class="ChoiceBoxesFirstLign">
+                            <span class="ChoiceBoxesText">Appareils</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>                        
+                    </div>    
                 </div>
-                <div class="ChoiceBoxes">
-                    <span class="ChoiceBoxesText">Ustensiles</span>
-                    <i class="fa-solid fa-chevron-down"></i>
+                <div class="ChoiceBoxes" id="Ustensiles">
+                    <div class="ChoiceBoxesContent">
+                        <div class="ChoiceBoxesFirstLign">
+                            <span class="ChoiceBoxesText">Ustensiles</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>    
                 </div>
             </div>
             <span class="RecipeCount">1500 Recettes</span>
