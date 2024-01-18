@@ -131,6 +131,7 @@ header img{
 
         /*********
         * LOUPE RECHERCHE
+        
         *********/
 .headerSearchBar{
     position: relative;
@@ -202,31 +203,47 @@ header img{
                 * USTENSILES
                 *********/
 
-
 .ChoiceBoxesContainer{
     display: flex;
     flex-direction: row;
     gap: 4.125rem;
-    overflow: hidden;
-    
+    /* overflow: hidden;  */
 }
+
 .ChoiceBoxes{
-    width: 12.188rem;    
+    width: 12.188rem;
+    min-height: 50px;
     background-color: white;
-    border-radius: 11px;
-    padding: 1rem;
-    max-height: 50px;    
+    border-radius: 11px;    
+    position: relative;
+    /* overflow: hidden;  */
+      
 }
 
 .ChoiceBoxesContent{     
-    gap: 100px;
+    /* gap: 50px; */
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    height: 50px;
+    overflow: hidden;
+    /* padding: 1rem; */
+    border-radius: 11px;
+    font-family: 'Manrope';
     
 }
+
 .ChoiceBoxesFirstLign{
     display: flex;     
     justify-content: space-between;    
     color: var(--BLACK);
     margin-bottom: 20px;
+    padding: 1rem;
+}
+
+.ChoiceBoxesFirstLign:hover {
+    background-color: var(--YELLOW);
+
 }
 
 .rectangleContainer{
@@ -239,6 +256,7 @@ header img{
     align-items: center;
     padding: 10px;
     gap: 5px;
+    margin: 0 10px;
 }
 
 .rectangleContainer input{
@@ -246,8 +264,17 @@ header img{
     outline: none;
     width: 100%;
     color: var(--GREY);
-   }
+}
 
+.rectangleContainer input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    background: url(.\assets\icons\ClosingCross.svg) no-repeat center center;
+    background-size: contain;
+    outline: 1px solid black;
+  }
+  
 .specificSearch{
     display: flex;
     align-items: center;
@@ -257,6 +284,7 @@ header img{
 
 /*********
 * LA LOUPE SPECIFIQUE
+code trouvé sur codePen
 *********/
 
 .ico-mglass {
@@ -280,11 +308,8 @@ header img{
        -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
-    }
-    
-  }
-  
-
+    }  
+}
 
 .listSuggestions{
     max-height: 140px;
@@ -293,10 +318,21 @@ header img{
     font-style: 'manrope', sans-serif;
     color: var(--BLACK);
     font-size: 0.875rem;
+    
 }
+
+.listSuggestions li{
+    padding-left: 1rem;
+}
+.listSuggestions li:hover{
+    background-color: var(--YELLOW);
+}
+
 .active {
-    max-height: 250px;     
+    height: 250px;    
+    
 }
+
 .rotate {
     transform: rotate(180deg);
 }
