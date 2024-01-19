@@ -42,9 +42,34 @@ for (const ingredient of uniqueIngredientsArray) {
     const listItem = document.createElement("li");
     listItem.textContent = ingredient;
     // Ajoutez l'événement click à chaque élément li
-    listItem.addEventListener('click', function() {
+    listItem.addEventListener('click', function () {
+        var estSurligne = listItem.classList.contains('surligne');
+
+        // Si l'élément est surligné, retire le surlignement et la croix
+        if (estSurligne) {
+            listItem.classList.remove('surligne');
+            listItem.removeChild(listItem.querySelector('.croix'));
+        } else {
+          // Sinon, surligne l'élément en jaune
+          listItem.classList.add('surligne');
+  
+          // Ajoute une croix de fermeture à côté de l'élément
+          var croix = document.createElement('span');
+          croix.classList.add('croix');
+          croix.textContent = '✖';
+          croix.addEventListener('click', function(e) {
+            // Empêche la propagation du clic pour éviter de déclencher le clic de l'élément
+            e.stopPropagation();
+  
+            // Retire le surlignement et la croix lorsque la croix est cliquée
+            listItem.classList.remove('surligne');
+            listItem.removeChild(croix);
+            });
+
+            listItem.appendChild(croix);
+          }  
     // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque l'élément est cliqué
-    console.log('Ingrédient cliqué:', ingredient);
+    //console.log('Ingrédient cliqué:', ingredient);
     // Ou appelez une fonction spécifique pour gérer le clic sur l'ingrédient
     // handleIngredientClick(ingredient);
   });

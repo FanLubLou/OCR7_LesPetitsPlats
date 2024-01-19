@@ -328,6 +328,20 @@ code trouvé sur codePen
     background-color: var(--YELLOW);
 }
 
+.surligne {
+    background-color: var(--YELLOW);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Ajoutez un style pour la croix */
+  .croix {
+    margin-right: 15px; /* Ajoutez une marge à la croix */
+    cursor: pointer;
+  }
+
+
 .active {
     height: 250px;    
     
