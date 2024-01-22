@@ -230,6 +230,7 @@ header img{
     /* padding: 1rem; */
     border-radius: 11px;
     font-family: 'Manrope';
+    z-index: 1000;
     
 }
 
