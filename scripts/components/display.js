@@ -180,10 +180,28 @@ function updateRenderSuggestionIng() {
      for (const ingredient of uniqueIngredientsArray) {
          const listItem = document.createElement("li");
          listItem.textContent = ingredient;
+         
+         if (tagList.includes(ingredient)) {
+            listItem.classList.add("surligne");
 
+            const closeIcon = document.createElement("span");
+            closeIcon.innerHTML = "X";
+            closeIcon.classList.add("croix");
+
+            // Ajouter un événement click pour la croix de fermeture
+            closeIcon.addEventListener('click', function (event) {
+                event.stopPropagation(); // Éviter la propagation du clic à l'élément li
+                const updatedTagList = toggleTag(ingredient);
+                displayTagList(updatedTagList);
+                updateRenderSuggestionApp();
+            });
+
+            // Ajouter le span de fermeture à l'élément li
+            listItem.appendChild(closeIcon);
+        }
          // On ajoute l'événement click à chaque élément li
          listItem.addEventListener('click', function () {
-             const updatedTagList = toggleTag(listItem.innerText);
+             const updatedTagList = toggleTag(ingredient);
              displayTagList(updatedTagList);
              updateRenderSuggestionIng();
              
@@ -223,9 +241,29 @@ function updateRenderSuggestionApp () {
         for (const appliance of appliancesList) {
             const listItem = document.createElement("li");
             listItem.textContent = appliance;
+            
+            if (tagList.includes(appliance)) {
+                listItem.classList.add("surligne");
+    
+                const closeIcon = document.createElement("span");
+                closeIcon.innerHTML = "X";
+                closeIcon.classList.add("croix");
+    
+                // Ajouter un événement click pour la croix de fermeture
+                closeIcon.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Éviter la propagation du clic à l'élément li
+                    const updatedTagList = toggleTag(appliance);
+                    displayTagList(updatedTagList);
+                    updateRenderSuggestionApp();
+                });
+    
+                // Ajouter le span de fermeture à l'élément li
+                listItem.appendChild(closeIcon);
+            }
+
             // Ajoutez l'événement click à chaque élément li
             listItem.addEventListener('click', function () {
-                const tagList = toggleTag(listItem.innerText);
+                const tagList = toggleTag(appliance);
                 displayTagList(tagList);
                 updateRenderSuggestionApp();
             });
@@ -234,43 +272,54 @@ function updateRenderSuggestionApp () {
         };
 }
 
-function updateRenderSuggestionUst () {
-        
+function updateRenderSuggestionUst() {
     const tagList = getTagList();
-    /****************************
-     * Récupération de la liste des recettes 
-    *****************************/
     const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
 
+    let ustensilsSet = new Set();
+    filteredRecipesByTags.forEach(recipe => {
+        recipe.ustensils.forEach(ustensil => {
+            ustensilsSet.add(normalizeInput(ustensil));
+        });
+    });
+    let ustensilsList = Array.from(ustensilsSet).sort();
 
-     /****************************
-                * Création du tableau des appareils uniques
-                *****************************/
-     let ustensilsSet = new Set();
-     filteredRecipesByTags.forEach(recipe => {
-         recipe.ustensils.forEach(ustensil => {
-             ustensilsSet.add(normalizeInput(ustensil));
-         });
-     });
-     let ustensilsList = Array.from(ustensilsSet).sort();
-
-     /****************************
-     * Gestion de l'affichage
-     *****************************/
-     //Récupérer le bloc dédié à l'affichage des suggestions
     const listSuggestionsUst = document.getElementById("listSuggestionsUst");
-    // Effacer le contenu précédent
-    listSuggestionsUst.innerHTML = "";    
-     //On lui implémente la liste des suggestions
-     for (const ustensil of ustensilsList) {
-         const listItem = document.createElement("li");
-         listItem.textContent = ustensil;
-         // Ajoutez l'événement click à chaque élément li
-         listItem.addEventListener('click', function () {
-             const tagList = toggleTag(listItem.innerText);
-             displayTagList(tagList);
-             updateRenderSuggestionUst();
-         });
-         listSuggestionsUst.appendChild(listItem);
-     };
+    listSuggestionsUst.innerHTML = "";
+
+    for (const ustensil of ustensilsList) {
+        const listItem = document.createElement("li");
+
+        listItem.textContent = ustensil;
+
+        // Ajouter la croix de fermeture et le surlignement jaune seulement si l'ustensile est dans tagList
+        if (tagList.includes(ustensil)) {
+            listItem.classList.add("surligne");
+
+            const closeIcon = document.createElement("span");
+            closeIcon.innerHTML = "X";
+            closeIcon.classList.add("croix");
+
+            // Ajouter un événement click pour la croix de fermeture
+            closeIcon.addEventListener('click', function (event) {
+                event.stopPropagation(); // Éviter la propagation du clic à l'élément li
+                const updatedTagList = toggleTag(ustensil);
+                displayTagList(updatedTagList);
+                updateRenderSuggestionUst();
+            });
+
+            // Ajouter le span de fermeture à l'élément li
+            listItem.appendChild(closeIcon);
+        }
+
+        // Ajouter l'événement click à chaque élément li
+        listItem.addEventListener('click', function () {
+            const updatedTagList = toggleTag(ustensil);
+            displayTagList(updatedTagList);
+            updateRenderSuggestionUst();
+        });
+
+        // Ajouter l'élément li à la liste des suggestions
+        listSuggestionsUst.appendChild(listItem);
+    }
 }

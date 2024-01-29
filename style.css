@@ -342,6 +342,10 @@ code trouvé sur codePen
     cursor: pointer;
   }
 
+  .croix:hover{
+    color: white;
+  }
+
 
 .active {
     height: 270px;    
