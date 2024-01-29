@@ -23,4 +23,5 @@ export function filterRecipesByTags(recipes, normalizedTags) {
     });
 
     return filteredRecipes;
+    
 }

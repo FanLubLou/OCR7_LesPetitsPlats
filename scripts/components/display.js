@@ -4,6 +4,7 @@ import { getTagList } from '../utils/toggleTag.js';
 import { recipes } from '../../data/recipes.js';
 import { filterRecipesByTags } from '../utils/filterRecipesByTags.js';
 import { normalizeInput } from '../utils/normalization.js';
+import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 
 
 
@@ -145,7 +146,9 @@ function updateRenderSuggestionIng() {
      /****************************
     * Récupération de la liste des recettes 
     *****************************/
-     const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
+    const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
+    updateRecipeCountElement(filteredRecipesByTags);
+    
     
      /****************************
      * Création du tableau des ingrédients uniques

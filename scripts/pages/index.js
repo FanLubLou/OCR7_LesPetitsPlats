@@ -3,6 +3,7 @@ import { displaySuggestions } from '../components/display.js';
 import { handleDocumentClick } from '../utils/handleDocumentClick.js';
 import { updateDisplayRecipes } from '../components/display.js';
 import { getTagList } from '../utils/toggleTag.js';
+import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 
 
 
@@ -15,6 +16,11 @@ const tagList = getTagList;
 ********************************************************/
 updateDisplayRecipes(recipes, tagList);
 
+
+/*********************************************************
+* MISE A JOUR DU NOMBRE DE RECETTES
+********************************************************/
+updateRecipeCountElement(recipes);
 
 
 /*********************************************************
