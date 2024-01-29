@@ -344,7 +344,7 @@ code trouvé sur codePen
 
 
 .active {
-    height: 250px;    
+    height: 270px;    
     
 }
 
@@ -396,6 +396,16 @@ code trouvé sur codePen
 .DisplayChoiceBoxes span {
     max-width: 8.75rem;
 }
+
+.DisplayChoiceBoxesClose{
+    font-weight: bolder;
+}
+
+
+.DisplayChoiceBoxesClose:hover {
+    color: white;
+}
+
 
         /************************
         * THIRDSECTION_RECIPES DISPLAY IN GRID

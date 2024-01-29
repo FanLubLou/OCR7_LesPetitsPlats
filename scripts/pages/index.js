@@ -1,25 +1,29 @@
 import { recipes } from '../../data/recipes.js';
-import { recipeRender } from '../components/display.js';
 import { displaySuggestions } from '../components/display.js';
 import { handleDocumentClick } from '../utils/handleDocumentClick.js';
+import { updateDisplayRecipes } from '../components/display.js';
+import { getTagList } from '../utils/toggleTag.js';
 
 
+
+// Exemple d'utilisation
+const tagList = getTagList;
 
 
 /*********************************************************
 * AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES RECETTES TRIEES
 ********************************************************/
-recipeRender(recipes);
+updateDisplayRecipes(recipes, tagList);
+
 
 
 /*********************************************************
-* AFFICHAGE DES SUGGESTIONS D'INGREDIENTS D'USTENSILES OU D'APPAREILS
+* AFFICHAGE DES SUGGESTIONS DES ELEMENTS DE CUISINE
 ********************************************************/
 const cookingElements = document.querySelectorAll('.ChoiceBoxesFirstLign');
 cookingElements.forEach(element => {
-  element.addEventListener("click", displaySuggestions);
+  element.addEventListener("click", displaySuggestions());
 });
-
 
 
 /*********************************************************
