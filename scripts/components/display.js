@@ -123,6 +123,8 @@ export function displayTagList(tagList) {
                 e.stopPropagation();            
                 tagList.splice(tagList.indexOf(ingredient), 1);
                 displayTagList(tagList);
+                const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
+                updateRecipeCountElement(filteredRecipesByTags);
             });
             // Ajoutez les spans au div
             displayChoiceBox.appendChild(textSpan);
@@ -196,7 +198,7 @@ function updateRenderSuggestionIng() {
                 event.stopPropagation(); // Éviter la propagation du clic à l'élément li
                 const updatedTagList = toggleTag(ingredient);
                 displayTagList(updatedTagList);
-                updateRenderSuggestionApp();
+                updateRenderSuggestionIng();
             });
 
             // Ajouter le span de fermeture à l'élément li
@@ -221,6 +223,7 @@ function updateRenderSuggestionApp () {
          * Récupération de la liste des recettes 
         *****************************/
         const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
+        updateRecipeCountElement(filteredRecipesByTags);
    
 
         /****************************
@@ -278,6 +281,7 @@ function updateRenderSuggestionApp () {
 function updateRenderSuggestionUst() {
     const tagList = getTagList();
     const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
+    updateRecipeCountElement(filteredRecipesByTags);
 
     let ustensilsSet = new Set();
     filteredRecipesByTags.forEach(recipe => {
