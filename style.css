@@ -271,7 +271,7 @@ header img{
     -webkit-appearance: none;
     height: 15px;
     width: 15px;
-    background: url(.\assets\icons\ClosingCross.svg) no-repeat center center;
+    background: url(./assets/icons/ClosingCross.svg) no-repeat center center;
     background-size: contain;
     outline: 1px solid black;
   }

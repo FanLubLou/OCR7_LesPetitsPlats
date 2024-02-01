@@ -24,7 +24,7 @@ export function recipeRender(dataRecipes) {
 * DEFINITION DE LA FONCTION DE MISE A JOUR DE L'AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES TAGS
 *****************************************************/
 
-export function updateDisplayRecipes(recipes, TagList) {
+export function updateDisplayRecipes(recipes, TagList, searchQuery) {
     
     // On va d'abord sélectionner la troisième section destinée à afficher les recettes afin de la vider
     var sectionElement = document.querySelector('.thirdSection_recipesDisplay');
@@ -32,6 +32,7 @@ export function updateDisplayRecipes(recipes, TagList) {
 
     const filteredRecipesByTags = filterRecipesByTags(recipes, TagList);
     recipeRender(filteredRecipesByTags);
+    updateRecipeCountElement(filteredRecipesByTags);
 };
 
 
@@ -124,7 +125,7 @@ export function displayTagList(tagList) {
                 tagList.splice(tagList.indexOf(ingredient), 1);
                 displayTagList(tagList);
                 const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-                updateRecipeCountElement(filteredRecipesByTags);
+                // updateRecipeCountElement(filteredRecipesByTags);
             });
             // Ajoutez les spans au div
             displayChoiceBox.appendChild(textSpan);
@@ -149,7 +150,7 @@ function updateRenderSuggestionIng() {
     * Récupération de la liste des recettes 
     *****************************/
     const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-    updateRecipeCountElement(filteredRecipesByTags);
+    // updateRecipeCountElement(filteredRecipesByTags);
     
     
      /****************************
@@ -223,7 +224,7 @@ function updateRenderSuggestionApp () {
          * Récupération de la liste des recettes 
         *****************************/
         const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-        updateRecipeCountElement(filteredRecipesByTags);
+        // updateRecipeCountElement(filteredRecipesByTags);
    
 
         /****************************
@@ -281,7 +282,7 @@ function updateRenderSuggestionApp () {
 function updateRenderSuggestionUst() {
     const tagList = getTagList();
     const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-    updateRecipeCountElement(filteredRecipesByTags);
+    // updateRecipeCountElement(filteredRecipesByTags);
 
     let ustensilsSet = new Set();
     filteredRecipesByTags.forEach(recipe => {
