@@ -19,7 +19,7 @@ export function handleSearchInput(searchInput, recipes, tagList) {
     }
 }
 
-// Ajoute une fonction pour obtenir filteredRecipes si nécessaire
-export function getFilteredRecipes() {
-    return filteredRecipes;
-}
+// // Ajoute une fonction pour obtenir filteredRecipes si nécessaire
+// export function getFilteredRecipes() {
+//     return filteredRecipes;
+// }

@@ -19,6 +19,6 @@ export function toggleTag(cookingElt) {
     return tagList;    
 }
 
-export function getTagList() {
-    return tagList;
-}
+// export function getTagList() {
+//     return tagList;
+// }

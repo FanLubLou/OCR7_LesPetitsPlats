@@ -1,11 +1,12 @@
 import { cardFactory } from '../factory/cardFactory.js';
 import { toggleTag } from '../utils/toggleTag.js';
-import { getTagList } from '../utils/toggleTag.js';
+// import { getTagList } from '../utils/toggleTag.js';
 import { handleSearchInput } from '../utils/searchEvents.js';
 import { recipes } from '../../data/recipes.js';
 import { filterRecipes } from '../utils/filterRecipes.js';
 import { normalizeInput } from '../utils/normalization.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
+import { getTagList } from '../utils/reconstructTagList.js';
 
 
 

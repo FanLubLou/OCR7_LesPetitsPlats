@@ -2,9 +2,12 @@ import { recipes } from '../../data/recipes.js';
 import { displaySuggestions } from '../components/display.js';
 import { handleDocumentClick } from '../utils/handleDocumentClick.js';
 import { updateDisplayRecipes } from '../components/display.js';
-import { getTagList } from '../utils/toggleTag.js';
+// import { getTagList } from '../utils/toggleTag.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 import { handleSearchInput } from '../utils/searchEvents.js';
+import { handleSearchFormSubmit } from '../utils/searchFormSubmission.js';
+import { getTagList } from '../utils/reconstructTagList.js';
+
 
 
 // Exemple d'utilisation
@@ -43,8 +46,25 @@ document.addEventListener('DOMContentLoaded', function () {
   searchInput.addEventListener('input', function () {
     const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
     updateDisplayRecipes(filteredRecipes, tagList);
-  });
+  });  
 });
+
+
+const searchForm = document.getElementById('search-recipe');
+const searchButton = document.querySelector('.fa-magnifying-glass');
+if (searchForm) {
+  searchForm.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      console.log('Ca marche ou bien');
+      handleSearchFormSubmit(event);
+    }
+  });
+}
+if (searchButton) {
+  searchButton.addEventListener('click', function (event) {
+    handleSearchFormSubmit(event)
+  });
+} 
 
 /*********************************************************
 * FERMETURE DES MENUS DEROULANTS LORS DE CLIC DANS LE VIDE DE L'UTILISATEUR
