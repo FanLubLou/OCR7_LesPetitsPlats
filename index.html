@@ -24,7 +24,7 @@
         <div class="headerContent">
             <span class="headerTextContent">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
             <div class="headerSearchBar">
-                <input type="search" id="search-recipe" placeholder="Rechercher une recette, un ingrédient,...">
+                <input type="search" id="search-recipe" pattern="^[A-Za-z\s]+$" title="Veuillez saisir uniquement des lettres et espaces." placeholder="Rechercher une recette, un ingrédient,...">
                 <div class="glassContainer">    
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>    
@@ -35,7 +35,7 @@
         <section class="firstSection_searchCriterias">
             <div class="ChoiceBoxesContainer">                
                 <div class="ChoiceBoxes">
-                    <div class="ChoiceBoxesContent"id="ingredients">
+                    <div class="ChoiceBoxesContent"id="Ingredients">
                         <div class="ChoiceBoxesFirstLign" id="FirstLign_Ingredients">
                             <span class="ChoiceBoxesText">Ingrédients</span>
                             <i id="chevronIcon" class="fa-solid fa-chevron-down"></i>
@@ -48,11 +48,11 @@
                                 </div>    
                             </div>                                    
                         </div>                      
-                        <div class="listSuggestions" id="listSuggestionsIng"></div>
+                        <div class="listSuggestions" id="listSuggestionsIngredients"></div>
                     </div>        
                 </div>  
                 <div class="ChoiceBoxes">
-                    <div class="ChoiceBoxesContent"id="appareils">
+                    <div class="ChoiceBoxesContent"id="Appareils">
                         <div class="ChoiceBoxesFirstLign" id="FirstLign_Appareils">
                             <span class="ChoiceBoxesText">Appareils</span>
                             <i id="chevronIcon" class="fa-solid fa-chevron-down"></i>
@@ -65,7 +65,7 @@
                                 </div>    
                             </div>                                    
                         </div>                      
-                        <div class="listSuggestions" id="listSuggestionsApp"></div>                        
+                        <div class="listSuggestions" id="listSuggestionsAppareils"></div>                        
                     </div>    
                 </div>  
                 <div class="ChoiceBoxes">
@@ -82,7 +82,7 @@
                                 </div>    
                             </div>                                    
                         </div>                      
-                        <div class="listSuggestions" id="listSuggestionsUst"></div>
+                        <div class="listSuggestions" id="listSuggestionsUstensiles"></div>
                     </div>    
                 </div>             
             </div>

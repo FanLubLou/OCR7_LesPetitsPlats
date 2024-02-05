@@ -6,9 +6,7 @@ export function cardFactory(recipes) {
         name,
         ingredients,
         time,
-        description,
-        appliance,
-        ustensils,
+        description,        
     } = recipes;
     function createCard() {
         const thirdSection = document.querySelector('.thirdSection_recipesDisplay');

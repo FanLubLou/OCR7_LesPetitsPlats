@@ -408,6 +408,7 @@ code trouvé sur codePen
 
 .DisplayChoiceBoxesClose:hover {
     color: white;
+    cursor: pointer;
 }
 
 
@@ -536,4 +537,15 @@ h2 {
     font-family: 'Manrop', sans-serif;
     font-size: 0.875rem;
     line-height: normal;
+}
+.no-recipe-message{
+    color: var(--YELLOW);
+    font-family: 'Anton', sans-serif;
+    font-size: 2.75rem;
+    overflow: hidden;
+    text-align: center;
+    /* permet d'afficher le message sur les trois colonnes et donc de centrer */
+    grid-column: span 3;
+    
+
 }                        

@@ -1,8 +1,9 @@
 import { cardFactory } from '../factory/cardFactory.js';
 import { toggleTag } from '../utils/toggleTag.js';
 import { getTagList } from '../utils/toggleTag.js';
+import { handleSearchInput } from '../utils/searchEvents.js';
 import { recipes } from '../../data/recipes.js';
-import { filterRecipesByTags } from '../utils/filterRecipesByTags.js';
+import { filterRecipes } from '../utils/filterRecipes.js';
 import { normalizeInput } from '../utils/normalization.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 
@@ -18,8 +19,6 @@ export function recipeRender(dataRecipes) {
     });     
 };
 
-
-
 /****************************************************
 * DEFINITION DE LA FONCTION DE MISE A JOUR DE L'AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES TAGS
 *****************************************************/
@@ -30,9 +29,16 @@ export function updateDisplayRecipes(recipes, TagList, searchQuery) {
     var sectionElement = document.querySelector('.thirdSection_recipesDisplay');
     sectionElement.innerHTML = '';
 
-    const filteredRecipesByTags = filterRecipesByTags(recipes, TagList);
-    recipeRender(filteredRecipesByTags);
-    updateRecipeCountElement(filteredRecipesByTags);
+    const filteredRecipes = filterRecipes(recipes, TagList, searchQuery);
+    if (filteredRecipes.length === 0) {        
+        const noRecipeMessage = document.createElement('p');
+        noRecipeMessage.textContent = 'Aucune recette ne correspond à vos critères.';
+        noRecipeMessage.classList.add('no-recipe-message'); 
+        sectionElement.appendChild(noRecipeMessage);
+    } else {
+        recipeRender(filteredRecipes);
+    }
+    updateRecipeCountElement(filteredRecipes);
 };
 
 
@@ -43,57 +49,99 @@ export function updateDisplayRecipes(recipes, TagList, searchQuery) {
 export function displaySuggestions() {
     return function (event) {
         const elementId = event.currentTarget.id;
-        const tagList = getTagList();
-        switch (elementId) {
-            case 'FirstLign_Ingredients':
-                
-                /****************************
-                * Gestion du sens du chevron et de l'aggrandissement du bloc d'affichage
-                *****************************/
-                const chevronIconIng = this.querySelector('.fa-solid');
-                chevronIconIng.classList.toggle('rotate');
-                
-                const ChoiceBoxIng = document.getElementById("ingredients");
-                ChoiceBoxIng.classList.toggle("active");
-                
-                /****************************
-                * Mise à jour de la liste des suggestions
-                *****************************/
-                updateRenderSuggestionIng();
-               
-                break;
-                case 'FirstLign_Appareils':
-                /****************************
-                * Gestion du sens du chevron et de l'aggrandissement du bloc d'affichage
-                *****************************/
-                const chevronIconApp = this.querySelector('.fa-solid');
-                chevronIconApp.classList.toggle('rotate');
-                
-                const ChoiceBoxApp = document.getElementById("appareils");
-                ChoiceBoxApp.classList.toggle("active");
+        //Ici elementId va être soit FirstLign_Ingredients, soit FirstLign_Appareils, soit FirstLign_Ustensiles
+        const suggestionType = elementId.split('_')[1];
+        //Le split nous permet alors de récupérer soit Ingredients, soit Appareils, soit Ustensiles.            
+        // Gestion du sens du chevron et de l'aggrandissement du bloc d'affichage
+        const chevronIcon = this.querySelector('.fa-solid');
+        chevronIcon.classList.toggle('rotate');
+        const choiceBox = document.getElementById(suggestionType);
+        choiceBox.classList.toggle("active");
+        // Mise à jour de la liste des suggestions
+        updateRenderSuggestion(suggestionType);
+    };
+};
 
-                /****************************
-                * Mise à jour de la liste des suggestions
-                *****************************/
-                updateRenderSuggestionApp();
-                
-                break;
-                case 'FirstLign_Ustensiles':
-                /****************************
-                * Gestion du sens du chevron et de l'aggrandissement du bloc d'affichage
-                *****************************/
-                const chevronIconUst = this.querySelector('.fa-solid');
-                chevronIconUst.classList.toggle('rotate');
+/*********************************************************
+* DEFINITION DE LA FONCTION DE MISE A JOUR DE L AFFICHAGE DES SUGGESTIONS
+********************************************************/
+function updateRenderSuggestion(suggestionType) {
+    //On récupère ici les informations pour l'affichage: la liste des tags, la liste des recettes et les informations dans la barre de recherche principale
+    
+    const tagList = getTagList();
+    const searchInput = document.getElementById('search-recipe');
+    const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
 
-                const ChoiceBoxUst = document.getElementById("Ustensiles");
-                ChoiceBoxUst.classList.toggle("active");
-               
-                updateRenderSuggestionUst();
 
-                break;
-            default:
-                console.log(`Il y a un souci dans le switch de la fonction displaySuggestions`);
+    //On constitue un tableau trié d'elements uniques de trois manière différentes car les données sont différentes à chaque fois. 
+        //Ingredients est un tableau d'objets contenant des propriétés telles que ingredient (au singulier)
+        //Appliance est une chaîne de caractère
+        //Ustensils est un tableau de chaînes de caractère
+    let uniqueItemsSet = new Set();
+    switch (suggestionType) {
+        case 'Ingredients':
+            for (const recipe of filteredRecipes) {
+                for (const ingredient of recipe.ingredients) {
+                    const formattedIngredient = normalizeInput(ingredient.ingredient);
+                    if (!uniqueItemsSet.has(formattedIngredient)) {
+                        uniqueItemsSet.add(formattedIngredient);
+                    }
+                }
+            }
+            break;
+        case 'Appareils':
+            for (const recipe of filteredRecipes) {
+                const formattedAppliance = normalizeInput(recipe.appliance);
+                if (!uniqueItemsSet.has(formattedAppliance)) {
+                    uniqueItemsSet.add(formattedAppliance);
+                }
+            }
+            break;
+        case 'Ustensiles':
+            for (const recipe of filteredRecipes) {
+                for (const ustensil of recipe.ustensils) {
+                    const formattedUstensil = normalizeInput(ustensil);
+                    if (!uniqueItemsSet.has(formattedUstensil)) {
+                        uniqueItemsSet.add(formattedUstensil);
+                    }
+                }
+            }
+            break;
+        default:
+            console.log(`Type de suggestion non pris en charge : ${suggestionType}`);
+            return;
+    }
+    const uniqueItemsArray = Array.from(uniqueItemsSet).sort();
+
+    //Gestion de l'affichage.
+    const listSuggestions = document.getElementById(`listSuggestions${suggestionType}`);
+    listSuggestions.innerHTML = "";
+
+    for (const item of uniqueItemsArray) {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+
+        if (tagList.includes(item)) {
+            listItem.classList.add("surligne");
+
+            const closeIcon = document.createElement("span");
+            closeIcon.innerHTML = "X";
+            closeIcon.classList.add("croix");
+
+            closeIcon.addEventListener('click', function (event) {
+                event.stopPropagation();
+                const updatedTagList = toggleTag(item);
+                displayTagList(updatedTagList);
+                updateRenderSuggestion(suggestionType);
+            });
+            listItem.appendChild(closeIcon);
         }
+        listItem.addEventListener('click', function () {
+            const updatedTagList = toggleTag(item);
+            displayTagList(updatedTagList);
+            updateRenderSuggestion(suggestionType);
+        });
+        listSuggestions.appendChild(listItem);
     }
 };
 
@@ -123,9 +171,7 @@ export function displayTagList(tagList) {
                 // Empêche la propagation du clic pour éviter de déclencher le clic de l'élément
                 e.stopPropagation();            
                 tagList.splice(tagList.indexOf(ingredient), 1);
-                displayTagList(tagList);
-                const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-                // updateRecipeCountElement(filteredRecipesByTags);
+                displayTagList(tagList);                
             });
             // Ajoutez les spans au div
             displayChoiceBox.appendChild(textSpan);
@@ -137,197 +183,4 @@ export function displayTagList(tagList) {
 };
 
 
-/*********************************************************
-* DEFINITION DE LA FONCTION DE MISE A JOUR DE L AFFICHAGE DES SUGGESTIONS D ING 
-********************************************************/
 
-function updateRenderSuggestionIng() {
-    
-    const tagList = getTagList();
-    
-
-     /****************************
-    * Récupération de la liste des recettes 
-    *****************************/
-    const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-    // updateRecipeCountElement(filteredRecipesByTags);
-    
-    
-     /****************************
-     * Création du tableau des ingrédients uniques
-     *****************************/
-    const uniqueIngredients = new Set();
-    
-    
-     for (const recipe of filteredRecipesByTags) {
-         for (const ingredient of recipe.ingredients) {
-             // On Formate l'ingrédient en minuscules et sans accents
-             const formattedIngredient = normalizeInput(ingredient.ingredient);
-            
-             // On vérifie si l'ingrédient est déjà dans l'ensemble avant de l'ajouter
-             if (!uniqueIngredients.has(formattedIngredient)) {
-                    uniqueIngredients.add(formattedIngredient);
-                 
-             }
-         }
-     }
-    
-    const uniqueIngredientsArray = Array.from(uniqueIngredients).sort();
-   
-     /****************************
-     * Gestion de l'affichage
-     *****************************/
-     
-     //On Récupére le bloc dédié à l'affichage des suggestions
-     const listSuggestionsIng = document.getElementById("listSuggestionsIng");
-     // Effacer le contenu précédent
-     listSuggestionsIng.innerHTML = "";
-     //On lui implémente la liste des suggestions
-     for (const ingredient of uniqueIngredientsArray) {
-         const listItem = document.createElement("li");
-         listItem.textContent = ingredient;
-         
-         if (tagList.includes(ingredient)) {
-            listItem.classList.add("surligne");
-
-            const closeIcon = document.createElement("span");
-            closeIcon.innerHTML = "X";
-            closeIcon.classList.add("croix");
-
-            // Ajouter un événement click pour la croix de fermeture
-            closeIcon.addEventListener('click', function (event) {
-                event.stopPropagation(); // Éviter la propagation du clic à l'élément li
-                const updatedTagList = toggleTag(ingredient);
-                displayTagList(updatedTagList);
-                updateRenderSuggestionIng();
-            });
-
-            // Ajouter le span de fermeture à l'élément li
-            listItem.appendChild(closeIcon);
-        }
-         // On ajoute l'événement click à chaque élément li
-         listItem.addEventListener('click', function () {
-             const updatedTagList = toggleTag(ingredient);
-             displayTagList(updatedTagList);
-             updateRenderSuggestionIng();
-             
-         });
-         listSuggestionsIng.appendChild(listItem);
-     };
-}
-
-
-function updateRenderSuggestionApp () {
-        
-        const tagList = getTagList();
-        /****************************
-         * Récupération de la liste des recettes 
-        *****************************/
-        const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-        // updateRecipeCountElement(filteredRecipesByTags);
-   
-
-        /****************************
-        * Création du tableau des appareils uniques
-        *****************************/
-        let appliancesSet = new Set();
-        filteredRecipesByTags.forEach(recipe => {
-            appliancesSet.add(normalizeInput(recipe.appliance));
-        });
-        let appliancesList = Array.from(appliancesSet).sort();
-        
-        /****************************
-        * Gestion de l'affichage
-        *****************************/
-                        
-        //Récupérer le bloc dédié à l'affichage des suggestions
-        const listSuggestionsApp = document.getElementById("listSuggestionsApp");
-        // Effacer le contenu précédent
-        listSuggestionsApp.innerHTML = "";
-        //On lui implémente la liste des suggestions
-        for (const appliance of appliancesList) {
-            const listItem = document.createElement("li");
-            listItem.textContent = appliance;
-            
-            if (tagList.includes(appliance)) {
-                listItem.classList.add("surligne");
-    
-                const closeIcon = document.createElement("span");
-                closeIcon.innerHTML = "X";
-                closeIcon.classList.add("croix");
-    
-                // Ajouter un événement click pour la croix de fermeture
-                closeIcon.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Éviter la propagation du clic à l'élément li
-                    const updatedTagList = toggleTag(appliance);
-                    displayTagList(updatedTagList);
-                    updateRenderSuggestionApp();
-                });
-    
-                // Ajouter le span de fermeture à l'élément li
-                listItem.appendChild(closeIcon);
-            }
-
-            // Ajoutez l'événement click à chaque élément li
-            listItem.addEventListener('click', function () {
-                const tagList = toggleTag(appliance);
-                displayTagList(tagList);
-                updateRenderSuggestionApp();
-            });
-            listSuggestionsApp.appendChild(listItem);
-
-        };
-}
-
-function updateRenderSuggestionUst() {
-    const tagList = getTagList();
-    const filteredRecipesByTags = filterRecipesByTags(recipes, tagList);
-    // updateRecipeCountElement(filteredRecipesByTags);
-
-    let ustensilsSet = new Set();
-    filteredRecipesByTags.forEach(recipe => {
-        recipe.ustensils.forEach(ustensil => {
-            ustensilsSet.add(normalizeInput(ustensil));
-        });
-    });
-    let ustensilsList = Array.from(ustensilsSet).sort();
-
-    const listSuggestionsUst = document.getElementById("listSuggestionsUst");
-    listSuggestionsUst.innerHTML = "";
-
-    for (const ustensil of ustensilsList) {
-        const listItem = document.createElement("li");
-
-        listItem.textContent = ustensil;
-
-        // Ajouter la croix de fermeture et le surlignement jaune seulement si l'ustensile est dans tagList
-        if (tagList.includes(ustensil)) {
-            listItem.classList.add("surligne");
-
-            const closeIcon = document.createElement("span");
-            closeIcon.innerHTML = "X";
-            closeIcon.classList.add("croix");
-
-            // Ajouter un événement click pour la croix de fermeture
-            closeIcon.addEventListener('click', function (event) {
-                event.stopPropagation(); // Éviter la propagation du clic à l'élément li
-                const updatedTagList = toggleTag(ustensil);
-                displayTagList(updatedTagList);
-                updateRenderSuggestionUst();
-            });
-
-            // Ajouter le span de fermeture à l'élément li
-            listItem.appendChild(closeIcon);
-        }
-
-        // Ajouter l'événement click à chaque élément li
-        listItem.addEventListener('click', function () {
-            const updatedTagList = toggleTag(ustensil);
-            displayTagList(updatedTagList);
-            updateRenderSuggestionUst();
-        });
-
-        // Ajouter l'élément li à la liste des suggestions
-        listSuggestionsUst.appendChild(listItem);
-    }
-}

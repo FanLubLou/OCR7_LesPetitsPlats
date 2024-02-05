@@ -4,8 +4,7 @@ import { handleDocumentClick } from '../utils/handleDocumentClick.js';
 import { updateDisplayRecipes } from '../components/display.js';
 import { getTagList } from '../utils/toggleTag.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
-import { filterRecipesByTags } from '../utils/filterRecipesByTags.js';
-
+import { handleSearchInput } from '../utils/searchEvents.js';
 
 
 // Exemple d'utilisation
@@ -26,7 +25,7 @@ updateRecipeCountElement(recipes);
 
 
 /*********************************************************
-* AFFICHAGE DES SUGGESTIONS DES ELEMENTS DE CUISINE
+* AFFICHAGE DES SUGGESTIONS DES ELEMENTS DE CUISINE AU CLICK DE L'UTILISATEUR SUR UN DES TROIS MENUS DEROULANTS
 ********************************************************/
 const cookingElements = document.querySelectorAll('.ChoiceBoxesFirstLign');
 cookingElements.forEach(element => {
@@ -35,34 +34,17 @@ cookingElements.forEach(element => {
 
 
 
+/*********************************************************
+* APPEL DE LA FONCTION METTANT A JOUR L'INTERFACE (RECETTES PROPOSEES-LISTES DES SUGGESTIONS) SUR UTILISATION DE LA BARRE DE RECHERCHE PRINCIPALE
+********************************************************/
  // Attendre que le document soit chargé
- document.addEventListener('DOMContentLoaded', function () {
-  // Sélectionner l'élément de recherche
+document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('search-recipe');
-
-  // Ajouter un gestionnaire d'événements à l'entrée de l'utilisateur
   searchInput.addEventListener('input', function () {
-      // Récupérer la valeur de la barre de recherche
-      const searchQuery = searchInput.value.trim().toLowerCase();
-
-      // Vérifier si la longueur de la recherche est supérieure ou égale à 3 caractères
-      if (searchQuery.length >= 3) {
-        // Appeler la fonction de filtrage avec les trois paramètres
-          console.log('tagList',tagList)
-          const filteredRecipes = filterRecipesByTags(recipes, tagList, searchQuery);
-          
-        
-          updateDisplayRecipes(filteredRecipes, tagList);
-          // Faire quelque chose avec les recettes filtrées, par exemple, les afficher.
-          // console.log('filteredRecipes:',filteredRecipes);
-      }
+    const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
+    updateDisplayRecipes(filteredRecipes, tagList);
   });
 });
-
-
-
-
-
 
 /*********************************************************
 * FERMETURE DES MENUS DEROULANTS LORS DE CLIC DANS LE VIDE DE L'UTILISATEUR
