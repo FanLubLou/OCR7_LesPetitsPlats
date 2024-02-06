@@ -152,6 +152,23 @@ header img{
     color: var(--GREY);
     margin-right: -10px;
 }
+
+.headerSearchBar input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    background: url(./assets/icons/ClosingCross.svg) no-repeat center center;
+    background-size: contain;
+    right: 70px;
+    z-index: 1;
+    position: absolute;    
+}
+.headerSearchBar input[type="search"]::-webkit-search-cancel-button:hover {
+    color: var(--YELLOW)
+}
+ 
+
+
 .glassContainer{
     position: absolute;
     height: 51px;
@@ -161,7 +178,8 @@ header img{
     display: flex;
     align-items: center;
     justify-content: center; 
-    color: white;   
+    color: white;
+       
 }
 .glassContainer:hover{
     background-color: var(--YELLOW);
@@ -272,8 +290,7 @@ header img{
     height: 15px;
     width: 15px;
     background: url(./assets/icons/ClosingCross.svg) no-repeat center center;
-    background-size: contain;
-    outline: 1px solid black;
+    background-size: contain;    
   }
   
 .specificSearch{
@@ -348,8 +365,7 @@ code trouvé sur codePen
 
 
 .active {
-    height: auto;    
-    
+    height: auto;        
 }
 
 .rotate {
@@ -545,7 +561,5 @@ h2 {
     overflow: hidden;
     text-align: center;
     /* permet d'afficher le message sur les trois colonnes et donc de centrer */
-    grid-column: span 3;
-    
-
+    grid-column: span 3; 
 }                        

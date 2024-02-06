@@ -7,19 +7,15 @@ import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 import { handleSearchInput } from '../utils/searchEvents.js';
 import { handleSearchFormSubmit } from '../utils/searchFormSubmission.js';
 import { getTagList } from '../utils/reconstructTagList.js';
-
-
-
-// Exemple d'utilisation
-const tagList = getTagList();
+import { updateRenderSuggestion } from '../components/display.js';
 
 
 
 /*********************************************************
 * AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES RECETTES TRIEES
 ********************************************************/
+const tagList = getTagList();
 updateDisplayRecipes(recipes, tagList);
-
 
 /*********************************************************
 * MISE A JOUR DU NOMBRE DE RECETTES
@@ -35,8 +31,6 @@ cookingElements.forEach(element => {
   element.addEventListener("click", displaySuggestions());
 });
 
-
-
 /*********************************************************
 * APPEL DE LA FONCTION METTANT A JOUR L'INTERFACE (RECETTES PROPOSEES-LISTES DES SUGGESTIONS) SUR UTILISATION DE LA BARRE DE RECHERCHE PRINCIPALE
 ********************************************************/
@@ -49,13 +43,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });  
 });
 
-
+/*********************************************************
+* ECOUTEUR D EVENEMENTS SUR LA SAISIE DANS LA BARRE PRINCIPALE DE RECHERCE OU SUR LE CLIC SUR LA LOUPE.
+********************************************************/
+//Ici, après test, il ne semble pas nécessaire d'encapsuler le tout dans un écouteur d'événement dédié à l'événement 'DOMContentLoaded'.
 const searchForm = document.getElementById('search-recipe');
 const searchButton = document.querySelector('.fa-magnifying-glass');
 if (searchForm) {
   searchForm.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
-      console.log('Ca marche ou bien');
       handleSearchFormSubmit(event);
     }
   });
@@ -65,6 +61,34 @@ if (searchButton) {
     handleSearchFormSubmit(event)
   });
 } 
+
+
+/*********************************************************
+* ECOUTEUR D EVENEMENTS SUR LA SAISIE DANS LES BARRES DE RECHERCE SPECIFIQUES.
+********************************************************/
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Sélectionnez le conteneur des barres de recherche spécifiques
+  const searchContainers = document.querySelectorAll('.specificSearch');
+
+  // Ajoutez un écouteur d'événements à chaque conteneur
+  searchContainers.forEach(container => {
+      container.addEventListener('input', function(event) {
+          const input = event.target; // L'élément qui a déclenché l'événement
+          const searchType = input.id.split('_')[1]; // Obtenez le type de recherche (Ingredients, Appareils ou Ustensiles)
+          const searchValue = input.value.trim(); // Obtenez la valeur saisie dans la barre de recherche
+
+          // Vérifiez si la valeur saisie est au moins de trois caractères
+          if (searchValue.length >= 3) {
+            // Mise à jour de la liste de suggestions en fonction du type de recherche et de la valeur saisie
+            updateRenderSuggestion(searchType, searchValue);
+          } else {
+            updateRenderSuggestion(searchType);
+          }
+      });
+  });
+});
+
 
 /*********************************************************
 * FERMETURE DES MENUS DEROULANTS LORS DE CLIC DANS LE VIDE DE L'UTILISATEUR

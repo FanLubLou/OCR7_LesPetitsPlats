@@ -7,6 +7,7 @@ import { filterRecipes } from '../utils/filterRecipes.js';
 import { normalizeInput } from '../utils/normalization.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 import { getTagList } from '../utils/reconstructTagList.js';
+import { escapeHtml } from '../utils/inputConversion.js';
 
 
 
@@ -66,9 +67,9 @@ export function displaySuggestions() {
 /*********************************************************
 * DEFINITION DE LA FONCTION DE MISE A JOUR DE L AFFICHAGE DES SUGGESTIONS
 ********************************************************/
-function updateRenderSuggestion(suggestionType) {
-    //On récupère ici les informations pour l'affichage: la liste des tags, la liste des recettes et les informations dans la barre de recherche principale
+export function updateRenderSuggestion(suggestionType, searchValue) {
     
+    //On récupère ici les informations pour l'affichage: la liste des tags, la liste des recettes et les informations dans la barre de recherche principale
     const tagList = getTagList();
     const searchInput = document.getElementById('search-recipe');
     const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
@@ -93,7 +94,7 @@ function updateRenderSuggestion(suggestionType) {
         case 'Appareils':
             for (const recipe of filteredRecipes) {
                 const formattedAppliance = normalizeInput(recipe.appliance);
-                if (!uniqueItemsSet.has(formattedAppliance)) {
+                if (!uniqueItemsSet.has(formattedAppliance) ) {
                     uniqueItemsSet.add(formattedAppliance);
                 }
             }
@@ -114,11 +115,24 @@ function updateRenderSuggestion(suggestionType) {
     }
     const uniqueItemsArray = Array.from(uniqueItemsSet).sort();
 
+    /*********************************************************
+    * FILTRE DU TABLEAU CONSTITUE AVEC LES DONNEES ENTREES SUR LES BARRES DE RECHERCHE SPECIFIQUES
+    ********************************************************/
+    let filteredItemsArray;
+    if (searchValue) {
+        const normalizedsearchValue = normalizeInput(searchValue);
+        const escapedsearchValue = escapeHtml(normalizedsearchValue);
+        filteredItemsArray = uniqueItemsArray.filter(item => item.startsWith(escapedsearchValue));
+    } else {
+        filteredItemsArray = uniqueItemsArray;
+    }
+    
+
     //Gestion de l'affichage.
     const listSuggestions = document.getElementById(`listSuggestions${suggestionType}`);
     listSuggestions.innerHTML = "";
 
-    for (const item of uniqueItemsArray) {
+    for (const item of filteredItemsArray) {
         const listItem = document.createElement("li");
         listItem.textContent = item;
 
@@ -133,14 +147,14 @@ function updateRenderSuggestion(suggestionType) {
                 event.stopPropagation();
                 const updatedTagList = toggleTag(item);
                 displayTagList(updatedTagList);
-                updateRenderSuggestion(suggestionType);
+                updateRenderSuggestion(suggestionType, searchValue);
             });
             listItem.appendChild(closeIcon);
         }
         listItem.addEventListener('click', function () {
             const updatedTagList = toggleTag(item);
             displayTagList(updatedTagList);
-            updateRenderSuggestion(suggestionType);
+            updateRenderSuggestion(suggestionType, searchValue);
         });
         listSuggestions.appendChild(listItem);
     }
