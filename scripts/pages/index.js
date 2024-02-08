@@ -14,8 +14,8 @@ import { updateRenderSuggestion } from '../components/display.js';
 /*********************************************************
 * AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES RECETTES TRIEES
 ********************************************************/
-const tagList = getTagList();
-updateDisplayRecipes(recipes, tagList);
+// const tagList = getTagList();
+updateDisplayRecipes(recipes);
 
 /*********************************************************
 * MISE A JOUR DU NOMBRE DE RECETTES
@@ -38,8 +38,9 @@ cookingElements.forEach(element => {
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('search-recipe');
   searchInput.addEventListener('input', function () {
-    const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
-    updateDisplayRecipes(filteredRecipes, tagList);
+    const filteredRecipes = handleSearchInput(searchInput, recipes);
+    
+    updateDisplayRecipes(filteredRecipes);
   });  
 });
 

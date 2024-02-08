@@ -25,8 +25,9 @@ export function recipeRender(dataRecipes) {
 * DEFINITION DE LA FONCTION DE MISE A JOUR DE L'AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES TAGS
 *****************************************************/
 
-export function updateDisplayRecipes(recipes, TagList, searchQuery) {
+export function updateDisplayRecipes(recipes, searchQuery) {
     
+    const TagList = getTagList();
     // On va d'abord sélectionner la troisième section destinée à afficher les recettes afin de la vider
     var sectionElement = document.querySelector('.thirdSection_recipesDisplay');
     sectionElement.innerHTML = '';
@@ -72,7 +73,7 @@ export function updateRenderSuggestion(suggestionType, searchValue) {
     //On récupère ici les informations pour l'affichage: la liste des tags, la liste des recettes et les informations dans la barre de recherche principale
     const tagList = getTagList();
     const searchInput = document.getElementById('search-recipe');
-    const filteredRecipes = handleSearchInput(searchInput, recipes, tagList);
+    const filteredRecipes = handleSearchInput(searchInput, recipes);
 
 
     //On constitue un tableau trié d'elements uniques de trois manière différentes car les données sont différentes à chaque fois. 
@@ -194,7 +195,7 @@ export function displayTagList(tagList) {
             // Ajoutez le div généré à la section
             sectionElement.appendChild(displayChoiceBox);
     });
-    updateDisplayRecipes(recipes, tagList);
+    updateDisplayRecipes(recipes);
 };
 
 
