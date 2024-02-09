@@ -57,7 +57,8 @@ body{
     margin:0 auto;
     max-width: 1440px;
     font-style: normal;
-    font-weight: 400;    
+    font-weight: 400; 
+    font-size: 1em;  
 }
     /***********************************
     * HEADER
@@ -73,6 +74,8 @@ body{
     background-position: center 75%;
     background-repeat: no-repeat;
     background-size: cover;
+    font-size: 1em;
+    max-width: 1440px;
           
 }
 
@@ -111,11 +114,13 @@ header img{
         * HEADER CONTENT
         ************************/
 .headerContent{
+    width: 66%;
     margin:auto; 
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 1.813rem;    
+    gap: 1.813rem;
+    font-size: 1em;    
 }       
         /*********
         * BARRE DE RECHERCHE
@@ -123,10 +128,12 @@ header img{
 .headerTextContent{
     color: var(--YELLOW);
     font-family: 'Anton', sans-serif;
-    font-size: 2.75rem;
+    font-size: clamp(1rem, 2vw, 2.8rem);
     overflow: hidden;
     text-align: center;
-    width: 720px;  
+    width: 80%;
+    max-height: 132px;
+    /* width: 720px;   */
 }
 
         /*********
@@ -139,7 +146,8 @@ header img{
     flex-direction: row;
     justify-content: end;
     align-items: center;
-    width: 954px;
+    width: 100%;
+    /* width: 954px; */
     height: 4.25rem;
 }
 .headerSearchBar input{
@@ -209,7 +217,8 @@ header img{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+
 }
                 /*********
                 * INGREDIENTS
@@ -247,8 +256,7 @@ header img{
     overflow: hidden;
     /* padding: 1rem; */
     border-radius: 11px;
-    font-family: 'Manrope';
-    z-index: 1000;
+    font-family: 'Manrope';   
     
 }
 
@@ -335,7 +343,7 @@ code trouvé sur codePen
     overflow-y: scroll;
     font-style: 'manrope', sans-serif;
     color: var(--BLACK);
-    font-size: 0.875rem;
+    font-size: 0.875rem;     
     
 }
 
@@ -363,9 +371,10 @@ code trouvé sur codePen
     color: white;
   }
 
-
+/* Mettre le z-index ici va résoudre des conflits en petite résolution lorsque les menus déroulants seront disposés les uns au dessus des autres */
 .active {
-    height: auto;        
+    height: auto;
+    z-index: 1000;        
 }
 
 .rotate {
@@ -378,6 +387,9 @@ code trouvé sur codePen
     color: var(--BLACK);
     font-size: 1.313rem;
     font-family: 'Anton', sans-serif;
+    /* J'ajuste ici manuellement l'alignement du bloc de décompte des recettes avec Ustensiles */
+    padding-top: 10px;
+    
 }
         /************************
         * SECONDSECTION_SELECTED CRITERIAS
@@ -447,7 +459,8 @@ code trouvé sur codePen
     height: 46rem;
     position: relative;
     border-radius: 21px;
-    background-color: white;    
+    background-color: white; 
+    margin: auto;   
     
 }
                     /*********
@@ -563,3 +576,46 @@ h2 {
     /* permet d'afficher le message sur les trois colonnes et donc de centrer */
     grid-column: span 3; 
 }                        
+
+
+/*********
+* MEDIA QUERRIES POUR LES APPAREILS MOBILES
+
+*********/
+
+@media screen and (max-width: 1340px) {
+    .thirdSection_recipesDisplay{
+        grid-template-columns: repeat(2, 1fr);        
+    }
+  }
+  
+@media screen and (max-width: 1100px) {
+    .firstSection_searchCriterias {
+      flex-direction: column-reverse;
+      row-gap: 20px;
+    } 
+
+  }    
+
+@media screen and (max-width: 918px) {
+    .thirdSection_recipesDisplay{        
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .ChoiceBoxesContainer{
+        flex-direction: column;
+        gap: 1rem;
+        }
+    .ChoiceBoxes,
+    .DisplayChoiceBoxes{
+        /* width: 40VH; */
+        width: 23.75rem;
+        }
+    .DisplayChoiceBoxes{
+        margin: auto;
+    }   
+    .secondSection_selectedCriterias{
+        margin-top: 2.688rem;
+        row-gap: 0.5rem;
+    }
+
+}
