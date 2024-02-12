@@ -88,6 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       });
   });
+  searchContainers.forEach(searchContainer => {    
+    const searchBar = searchContainer.querySelector('input[type="search"]'); 
+    searchBar.addEventListener('blur', () => {       
+        searchBar.value = '';
+    });
+  });
 });
 
 

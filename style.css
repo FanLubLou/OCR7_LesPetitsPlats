@@ -55,10 +55,12 @@ background-color: var(--YELLOW);
 *****************************************/
 body{
     margin:0 auto;
-    max-width: 1440px;
     font-style: normal;
     font-weight: 400; 
-    font-size: 1em;  
+    font-size: 1em; 
+    max-width: 1440px;
+    margin: auto;
+    width: 100%; 
 }
     /***********************************
     * HEADER
@@ -67,7 +69,8 @@ body{
     display: flex;
     flex-direction: column;
     height: 50vh;
-    padding: 40px 69px; 
+    /* padding: 40px 69px;  */
+    padding: 2.5rem 4.313rem; 
     background:
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
         url(assets/images/img-header.jpeg);
@@ -75,7 +78,6 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     font-size: 1em;
-    max-width: 1440px;
           
 }
 
@@ -87,9 +89,11 @@ body{
     flex-direction: row;
     align-items: center;
     gap: 0.455rem;
+    
 }
 header img{
-    width: 180px;
+    /* width: 180px; */
+    width: 11.25rem;
 }
 .circleOutside{
     display: flex;
@@ -115,6 +119,7 @@ header img{
         ************************/
 .headerContent{
     width: 66%;
+    /* min-width: 280px; */
     margin:auto; 
     display: flex;
     align-items: center;
@@ -146,15 +151,17 @@ header img{
     flex-direction: row;
     justify-content: end;
     align-items: center;
-    width: 100%;
+    width: 100%;    
     /* width: 954px; */
     height: 4.25rem;
+    min-width: 250px;
 }
 .headerSearchBar input{
     width: 100%;
     height: 100%;
     border-radius: 11px;
-    padding: 25px 35px;
+    /* padding: 25px 35px; */
+    padding: 1.563rem 2.188rem;
     font-family: 'Manrope',sans-serif;;
     font-size: 1rem;
     color: var(--GREY);
@@ -174,9 +181,6 @@ header img{
 .headerSearchBar input[type="search"]::-webkit-search-cancel-button:hover {
     color: var(--YELLOW)
 }
- 
-
-
 .glassContainer{
     position: absolute;
     height: 51px;
@@ -186,15 +190,13 @@ header img{
     display: flex;
     align-items: center;
     justify-content: center; 
-    color: white;
-       
+    color: white;       
 }
 .glassContainer:hover{
     background-color: var(--YELLOW);
     color: black;
 }
-.fa-magnifying-glass{
-    
+.fa-magnifying-glass{    
     font-size: 2rem;
 }
 
@@ -205,7 +207,8 @@ header img{
     background-color: var(--BACKGROUND);
     height: 100%;
     width: 100%;
-    padding: 10px 6.25rem;
+    padding: 10px 6.25rem;    
+    
 }
         /************************
         * FIRSTSECTION_SEARCH_CRITERIAS
@@ -231,8 +234,11 @@ header img{
                 *********/
 
 .ChoiceBoxesContainer{
+    /* width: 100%; */
+    /* margin: auto; */
     display: flex;
     flex-direction: row;
+    /* justify-content: space-between; */
     gap: 4.125rem;
     /* overflow: hidden;  */
 }
@@ -389,6 +395,7 @@ code trouvé sur codePen
     font-family: 'Anton', sans-serif;
     /* J'ajuste ici manuellement l'alignement du bloc de décompte des recettes avec Ustensiles */
     padding-top: 10px;
+    white-space: nowrap;
     
 }
         /************************
@@ -432,7 +439,6 @@ code trouvé sur codePen
 .DisplayChoiceBoxesClose{
     font-weight: bolder;
 }
-
 
 .DisplayChoiceBoxesClose:hover {
     color: white;
@@ -579,7 +585,7 @@ h2 {
 
 
 /*********
-* MEDIA QUERRIES POUR LES APPAREILS MOBILES
+* MEDIA QUERRIES POUR RENDRE LE SITE RESPONSIVE
 
 *********/
 
@@ -587,35 +593,80 @@ h2 {
     .thirdSection_recipesDisplay{
         grid-template-columns: repeat(2, 1fr);        
     }
+  
   }
   
 @media screen and (max-width: 1100px) {
     .firstSection_searchCriterias {
       flex-direction: column-reverse;
-      row-gap: 20px;
+      row-gap: 20px;    
+      justify-content: center;
+      margin: auto;  
     } 
+    .ChoiceBoxesContainer{
+        width: 100%;
+        justify-content: space-between;
+    }
+    .rectangleContainer{
+    width: 100%;
+    }
 
   }    
 
 @media screen and (max-width: 918px) {
-    .thirdSection_recipesDisplay{        
-        grid-template-columns: repeat(1, 1fr);
+    .header{
+        padding: 2.5rem 1.0rem;
     }
+ 
+    .headerSearchBar{
+        height: 3.0rem;
+        
+    }
+    .headerSearchBar input{
+        margin-right: 0px;
+        padding: 0;
+        font-size: clamp(0.7rem, 2vw, 1.6rem);        
+    }
+    .glassContainer {
+        height: 100%;
+        width: 2.0rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .fa-magnifying-glass{    
+        font-size: 1rem;
+    }
+    .main{
+        padding: 10px 0.25rem;            
+    }        
     .ChoiceBoxesContainer{
+        width: unset;
         flex-direction: column;
         gap: 1rem;
+        margin: auto;
         }
     .ChoiceBoxes,
     .DisplayChoiceBoxes{
-        /* width: 40VH; */
-        width: 23.75rem;
+        width: 40VH;
+        /* width: 23.75rem; */
         }
     .DisplayChoiceBoxes{
         margin: auto;
     }   
     .secondSection_selectedCriterias{
+        width: 40VH;
+        margin: auto;
         margin-top: 2.688rem;
         row-gap: 0.5rem;
     }
+    .thirdSection_recipesDisplay{        
+        grid-template-columns: repeat(1, 1fr);
+    }
 
+}
+
+@media screen and (max-width: 389px) {
+    .recipeCard{
+        width: 16.875rem;
+    }
 }
