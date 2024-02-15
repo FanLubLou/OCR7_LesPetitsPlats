@@ -6,28 +6,55 @@ import { normalizeInput } from "./normalization.js";
 
 
 export function filterRecipes(recipes, normalizedTags, searchQuery) {
-    if (normalizedTags.length === 0 && !searchQuery) {
-        return recipes;
+    // Filtrage par normalizedTags
+    let filteredRecipes = [];
+    if (normalizedTags.length === 0) {
+        filteredRecipes = recipes;
+    } else {
+        for (let i = 0; i < recipes.length; i++) {
+            let recipe = recipes[i];
+            let ingredients = recipe.ingredients.map(ingredient => normalizeInput(ingredient.ingredient));
+            let appliance = normalizeInput(recipe.appliance);
+            let utensils = recipe.ustensils.map(utensil => normalizeInput(utensil));
+
+            let matchIngredients = normalizedTags.every(tag => ingredients.includes(tag));
+            let matchAppliance = normalizedTags.includes(appliance);
+            let matchUtensils = normalizedTags.every(tag => utensils.includes(tag));
+
+            if (matchIngredients && matchAppliance && matchUtensils) {
+                filteredRecipes.push(recipe);
+            }
+        }
     }
 
-    const filteredRecipes = recipes.filter(recipe => {
-        const containsAllTags = normalizedTags.every(tag => (
-            normalizeInput(recipe.appliance).includes(tag) ||
-            recipe.ustensils.some(ustensil => normalizeInput(ustensil).includes(tag)) ||
-            recipe.ustensils.some(ustensil => normalizeInput(ustensil).includes(tag)) ||
-            recipe.ingredients.some(ingredient => normalizeInput(ingredient.ingredient).includes(tag))
-        ));
+    // Filtrage par searchQuery
+    if (searchQuery !== "") {
+        let filteredRecipesByQuery = [];
+        let normalizedQuery = normalizeInput(searchQuery);
+        for (let i = 0; i < filteredRecipes.length; i++) {
+            let recipe = filteredRecipes[i];
+            let description = normalizeInput(recipe.description);
+            let name = normalizeInput(recipe.name);
+            let appliance = normalizeInput(recipe.appliance);
 
-        const containsSearchQuery = (
-            !searchQuery || // Si la recherche est vide, on considère que la recette passe la recherche
-            normalizeInput(recipe.name).includes(searchQuery) ||
-            recipe.ingredients.some(ingredient => normalizeInput(ingredient.ingredient).includes(searchQuery)) ||
-            normalizeInput(recipe.description).includes(searchQuery)
-        );
+            if (description.includes(normalizedQuery) || name.includes(normalizedQuery) || appliance.includes(normalizedQuery)) {
+                filteredRecipesByQuery.push(recipe);
+            } else {
+                let ingredients = recipe.ingredients.map(ingredient => normalizeInput(ingredient.ingredient));
+                let utensils = recipe.ustensils.map(utensil => normalizeInput(utensil));
 
-        return containsAllTags && containsSearchQuery;
-    });
-// test nouveau test
+                let matchQuery = ingredients.some(ingredient => ingredient.includes(normalizedQuery)) ||
+                                 utensils.some(utensil => utensil.includes(normalizedQuery));
+
+                if (matchQuery) {
+                    filteredRecipesByQuery.push(recipe);
+                }
+            }
+        }
+        return filteredRecipesByQuery;
+    }
+
     return filteredRecipes;
 }
+
 
