@@ -6,14 +6,19 @@ import { normalizeInput } from "./normalization.js";
 
 
 export function filterRecipes(recipes, normalizedTags, searchQuery) {
-    // Filtrage par normalizedTags
+    if (normalizedTags.length === 0 && !searchQuery) {
+        return recipes;
+    } else {
+         // Filtrage par normalizedTags
     let filteredRecipes = [];
     if (normalizedTags.length === 0) {
         filteredRecipes = recipes;
     } else {
         for (let i = 0; i < recipes.length; i++) {
             let recipe = recipes[i];
+            // console.log(ingredient.ingredient);
             let ingredients = recipe.ingredients.map(ingredient => normalizeInput(ingredient.ingredient));
+            
             let appliance = normalizeInput(recipe.appliance);
             let utensils = recipe.ustensils.map(utensil => normalizeInput(utensil));
 
@@ -55,6 +60,10 @@ export function filterRecipes(recipes, normalizedTags, searchQuery) {
     }
 
     return filteredRecipes;
+    }
+
+
+   
 }
 
 

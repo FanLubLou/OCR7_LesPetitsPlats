@@ -12,6 +12,7 @@ export function toggleTag(cookingElt) {
     if (index === -1) {
         // Si l'élément n'est pas déjà dans la liste, l'ajouter.
         tagList.push(cookingElt);
+        console.log('normalizedTags :', tagList);
     } else {
         // Si l'élément est déjà dans la liste, le retirer.
         tagList.splice(index, 1);
