@@ -27,7 +27,7 @@ export function filterRecipes(recipes, normalizedTags, searchQuery) {
 
         return containsAllTags && containsSearchQuery;
     });
-// test 
+// test nouveau test
     return filteredRecipes;
 }
 
