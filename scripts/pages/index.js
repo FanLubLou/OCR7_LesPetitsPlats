@@ -2,11 +2,9 @@ import { recipes } from '../../data/recipes.js';
 import { displaySuggestions } from '../components/display.js';
 import { handleDocumentClick } from '../utils/handleDocumentClick.js';
 import { updateDisplayRecipes } from '../components/display.js';
-// import { getTagList } from '../utils/toggleTag.js';
 import { updateRecipeCountElement } from '../utils/updateRecipesCount.js';
 import { handleSearchInput } from '../utils/searchEvents.js';
 import { handleSearchFormSubmit } from '../utils/searchFormSubmission.js';
-import { getTagList } from '../utils/reconstructTagList.js';
 import { updateRenderSuggestion } from '../components/display.js';
 
 

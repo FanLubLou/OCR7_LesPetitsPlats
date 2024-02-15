@@ -1,6 +1,5 @@
 import { cardFactory } from '../factory/cardFactory.js';
 import { toggleTag } from '../utils/toggleTag.js';
-// import { getTagList } from '../utils/toggleTag.js';
 import { handleSearchInput } from '../utils/searchEvents.js';
 import { recipes } from '../../data/recipes.js';
 import { filterRecipes } from '../utils/filterRecipes.js';

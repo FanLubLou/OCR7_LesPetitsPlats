@@ -3,9 +3,8 @@ import { normalizeInput } from "./normalization.js";
 import { escapeHtml } from "./inputConversion.js";
 import { getTagList } from "./reconstructTagList.js";
 
-let filteredRecipes = []; // Déclare la variable en dehors de la fonction
+let filteredRecipes = []; 
 
-// Fonction de gestion d'événements
 export function handleSearchInput(searchInput, recipes) {
     const userInput = searchInput.value.trim();    
     const normalizedInput = normalizeInput(userInput);
