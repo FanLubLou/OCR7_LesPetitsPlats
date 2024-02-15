@@ -1,32 +1,56 @@
 import { normalizeInput } from "./normalization.js";
+
 /****************************************************
-* DEFINITION DE LA FONCTION FILTRANT LES RECETTES EN FONCTION DE LA LISTE DE TAGS (NORMALISEE)
+* DEFINITION DE LA FONCTION FILTRANT LES RECETTES EN FONCTION DE LA LISTE DE TAGS (NORMALISEE) 
+                - Version avec les boucles natives uniquement
 *****************************************************/
 // A noter qu'ici, on prend la liste des tags qui a déjà été normalisée.
 
-
 export function filterRecipes(recipes, normalizedTags, searchQuery) {
-    if (normalizedTags.length === 0 && !searchQuery) {
-        return recipes;
-    } else {
-         // Filtrage par normalizedTags
+    // Cette expression ternaire permet de régler le problème des recettes qui pourraient ne pas avoir d'ingrédient, d'appareil ou d'ustensiles
+    // Dans la version utilisée de main, la méthode some() n'applique pas la fonction de rappel aux éléments vides ou 'null'
+    function normalizeString(str) {
+        return str ? normalizeInput(str) : '';
+    }
+
+    // On filtre une première fois par le biais des tags
     let filteredRecipes = [];
     if (normalizedTags.length === 0) {
         filteredRecipes = recipes;
     } else {
         for (let i = 0; i < recipes.length; i++) {
             let recipe = recipes[i];
-            // console.log(ingredient.ingredient);
-            let ingredients = recipe.ingredients.map(ingredient => normalizeInput(ingredient.ingredient));
-            
-            let appliance = normalizeInput(recipe.appliance);
-            let utensils = recipe.ustensils.map(utensil => normalizeInput(utensil));
 
-            let matchIngredients = normalizedTags.every(tag => ingredients.includes(tag));
-            let matchAppliance = normalizedTags.includes(appliance);
-            let matchUtensils = normalizedTags.every(tag => utensils.includes(tag));
+        /*********************************************************
+        * POUR CHAQUE RECETTE, ON VA CREER LES LISTES D'INGREDIENTS, D'APPAREILS OU D' USTENSILES SOUS FORME DE 3 TABLEAUX
+        ********************************************************/            
+            //Les 4 lignes suivantes correspondent en tout point à la méthode map suivante
+            // let ingredients = recipe.ingredients.map(ingredient => normalizeString(ingredient.ingredient));
+            let normalizedIngredients = [];
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                normalizedIngredients.push(normalizeString(recipe.ingredients[j].ingredient));
+            }
+            let normalizedAppliance = normalizeString(recipe.appliance);
+            //Les 4 lignes suivantes correspondent en tout point à la méthode map suivante
+            // let utensils = recipe.ustensils.map(utensil => normalizeString(utensil));
+            let normalizedUstensils = [];
+            for (let j = 0; j < recipe.ustensils.length; j++) {
+                normalizedUstensils.push(normalizeString(recipe.ustensils[j]));
+            }
 
-            if (matchIngredients && matchAppliance && matchUtensils) {
+        /*********************************************************
+        * ON CHERCHE ICI A EXCLURE LES RECETTES DONT L'UN DES TAGS DE LA normalizedTagList 
+        * N'EST INCLUS NI DANS LES INGREDIENTS NI DANS LES APPAREILS NI DANS LES USTENSILES
+        ********************************************************/
+            let allTagsIncluded = true;
+            for (let j = 0; j < normalizedTags.length; j++) {
+                let tag = normalizedTags[j];
+                if (!(normalizedIngredients.includes(tag) || normalizedAppliance === tag || normalizedUstensils.includes(tag))) {
+                    allTagsIncluded = false;
+                    break;
+                }
+            }
+            if (allTagsIncluded) {
                 filteredRecipes.push(recipe);
             }
         }
@@ -34,36 +58,44 @@ export function filterRecipes(recipes, normalizedTags, searchQuery) {
 
     // Filtrage par searchQuery
     if (searchQuery !== "") {
+        let normalizedQuery = normalizeString(searchQuery);
         let filteredRecipesByQuery = [];
-        let normalizedQuery = normalizeInput(searchQuery);
+
         for (let i = 0; i < filteredRecipes.length; i++) {
             let recipe = filteredRecipes[i];
-            let description = normalizeInput(recipe.description);
-            let name = normalizeInput(recipe.name);
-            let appliance = normalizeInput(recipe.appliance);
 
-            if (description.includes(normalizedQuery) || name.includes(normalizedQuery) || appliance.includes(normalizedQuery)) {
+        /*********************************************************
+        * POUR CHAQUE RECETTE, ON VA CREER LES LISTES D'INGREDIENTS, D'APPAREILS, D' USTENSILES, NOM ET DESCRIPTIONS SOUS FORME DE 5 TABLEAUX
+        ********************************************************/
+
+            //Les 4 lignes suivantes correspondent en tout point à la méthode map suivante
+            // let ingredients = recipe.ingredients.map(ingredient => normalizeString(ingredient.ingredient));
+            let normalizedIngredients = [];
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                normalizedIngredients.push(normalizeString(recipe.ingredients[j].ingredient));
+            }
+            let normalizedAppliance = normalizeString(recipe.appliance);
+            //Les 4 lignes suivantes correspondent en tout point à la méthode map suivante
+            // let utensils = recipe.ustensils.map(utensil => normalizeString(utensil));
+            let normalizedUstensils = [];
+            for (let j = 0; j < recipe.ustensils.length; j++) {
+                normalizedUstensils.push(normalizeString(recipe.ustensils[j]));
+            }
+            let description = normalizeString(recipe.description);
+            let name = normalizeString(recipe.name);
+            
+
+        /*********************************************************
+        * Il SUFFIT QUE L'ENTREE DE L'UTILISATEUR CORRESPONDE EN TOUT OU EN PARTIE A L'UN DES TABLEAUX POUR INCLURE LA RECETTE
+        * ********************************************************/
+
+            if (description.includes(normalizedQuery) || name.includes(normalizedQuery) || normalizedAppliance.includes(normalizedQuery) || normalizedIngredients.includes(normalizedQuery)|| normalizedUstensils.includes(normalizedQuery)) {
                 filteredRecipesByQuery.push(recipe);
-            } else {
-                let ingredients = recipe.ingredients.map(ingredient => normalizeInput(ingredient.ingredient));
-                let utensils = recipe.ustensils.map(utensil => normalizeInput(utensil));
-
-                let matchQuery = ingredients.some(ingredient => ingredient.includes(normalizedQuery)) ||
-                                 utensils.some(utensil => utensil.includes(normalizedQuery));
-
-                if (matchQuery) {
-                    filteredRecipesByQuery.push(recipe);
-                }
             }
         }
-        return filteredRecipesByQuery;
+
+        filteredRecipes = filteredRecipesByQuery;
     }
 
     return filteredRecipes;
-    }
-
-
-   
 }
-
-
