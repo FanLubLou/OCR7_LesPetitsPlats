@@ -162,7 +162,7 @@ header img{
     border-radius: 11px;
     /* padding: 25px 35px; */
     padding: 1.563rem 2.188rem;
-    font-family: 'Manrope',sans-serif;;
+    font-family: 'Manrope',sans-serif;
     font-size: 1rem;
     color: var(--GREY);
     margin-right: -10px;
@@ -327,8 +327,8 @@ code trouvé sur codePen
     height: 10px;
     width: 10px;
     border: 2px solid var(--GREY);
-    
-    &:after {
+}    
+.ico-mglass:after {
       content: "";
       height: 2px;
       width: 6px;
@@ -340,14 +340,14 @@ code trouvé sur codePen
        -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
          -o-transform: rotate(45deg);
-    }  
-}
+}  
+
 
 .listSuggestions{
     max-height: 140px;
     overflow: hidden;
     overflow-y: scroll;
-    font-style: 'manrope', sans-serif;
+    font-family: 'Manrope',sans-serif;
     color: var(--BLACK);
     font-size: 0.875rem;     
     
