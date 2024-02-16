@@ -24,17 +24,23 @@ export function recipeRender(dataRecipes) {
 * DEFINITION DE LA FONCTION DE MISE A JOUR DE L'AFFICHAGE DES RECETTES EN FONCTION DE LA LISTE DES TAGS
 *****************************************************/
 
-export function updateDisplayRecipes(recipes, searchQuery) {
+export function updateDisplayRecipes(recipes) {
     
     const TagList = getTagList();
     // On va d'abord sélectionner la troisième section destinée à afficher les recettes afin de la vider
     var sectionElement = document.querySelector('.thirdSection_recipesDisplay');
     sectionElement.innerHTML = '';
 
+    const searchInput = document.getElementById('search-recipe');
+    const userInput = searchInput.value.trim();    
+    const normalizedInput = normalizeInput(userInput);
+    const searchQuery = escapeHtml(normalizedInput);
+
     const filteredRecipes = filterRecipes(recipes, TagList, searchQuery);
+    console.log(`searchQuery : ${searchQuery}`);
     if (filteredRecipes.length === 0) {        
         const noRecipeMessage = document.createElement('p');
-        noRecipeMessage.textContent = 'Aucune recette ne correspond à vos critères.';
+        noRecipeMessage.textContent = `Aucune recette ne contient "${searchQuery}". Vous pouvez chercher « tarte aux pommes », « poisson », etc... `;
         noRecipeMessage.classList.add('no-recipe-message'); 
         sectionElement.appendChild(noRecipeMessage);
     } else {
