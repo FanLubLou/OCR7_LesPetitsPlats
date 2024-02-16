@@ -123,7 +123,7 @@ export function updateRenderSuggestion(suggestionType, searchValue) {
     if (searchValue) {
         const normalizedsearchValue = normalizeInput(searchValue);
         const escapedsearchValue = escapeHtml(normalizedsearchValue);
-        filteredItemsArray = uniqueItemsArray.filter(item => item.startsWith(escapedsearchValue));
+        filteredItemsArray = uniqueItemsArray.filter(item => item.includes(escapedsearchValue));
     } else {
         filteredItemsArray = uniqueItemsArray;
     }
