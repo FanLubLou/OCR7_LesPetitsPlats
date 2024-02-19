@@ -46,7 +46,7 @@ export function filterRecipes(recipes, normalizedTags, searchQuery) {
             let allTagsIncluded = true;
             for (let j = 0; j < normalizedTags.length; j++) {
                 let tag = normalizedTags[j];
-                if (!(normalizedIngredients.includes(tag) || normalizedAppliance === tag || normalizedUstensils.includes(tag))) {
+                if (!(normalizedIngredients.some(ingredient => ingredient.includes(tag)) || normalizedAppliance.includes(tag) || normalizedUstensils.some(utensil => utensil.includes(tag)))) {
                     allTagsIncluded = false;
                     break;
                 }
