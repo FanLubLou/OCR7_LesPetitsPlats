@@ -40,7 +40,8 @@ export function filterRecipes(recipes, normalizedTags, searchQuery) {
 
         /*********************************************************
         * ON CHERCHE ICI A EXCLURE LES RECETTES DONT L'UN DES TAGS DE LA normalizedTagList 
-        * N'EST INCLUS NI DANS LES INGREDIENTS NI DANS LES APPAREILS NI DANS LES USTENSILES
+        * N'EST INCLUS NI DANS LES INGREDIENTS NI DANS LES APPAREILS NI DANS LES USTENSILES.
+        * POUR LE DIRE AUTREMENT, DES QU'UN TAG N'EST COMPRIS DANS AUCUNE DES TROIS LISTES, NOUS RETIRONS LA RECETTE.
         ********************************************************/
             let allTagsIncluded = true;
             for (let j = 0; j < normalizedTags.length; j++) {
