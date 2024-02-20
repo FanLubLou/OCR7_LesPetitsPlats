@@ -25,28 +25,31 @@ export function recipeRender(dataRecipes) {
 *****************************************************/
 
 export function updateDisplayRecipes(recipes) {
-    
-    const TagList = getTagList();
-    // On va d'abord sélectionner la troisième section destinée à afficher les recettes afin de la vider
     var sectionElement = document.querySelector('.thirdSection_recipesDisplay');
-    sectionElement.innerHTML = '';
-
+    sectionElement.innerHTML = '';  
     const searchInput = document.getElementById('search-recipe');
+    const TagList = getTagList();
     const userInput = searchInput.value.trim();    
     const normalizedInput = normalizeInput(userInput);
     const searchQuery = escapeHtml(normalizedInput);
-
     const filteredRecipes = filterRecipes(recipes, TagList, searchQuery);
-    console.log(`searchQuery : ${searchQuery}`);
-    if (filteredRecipes.length === 0) {        
-        const noRecipeMessage = document.createElement('p');
-        noRecipeMessage.textContent = `Aucune recette ne contient "${searchQuery}". Vous pouvez chercher « tarte aux pommes », « poisson », etc... `;
-        noRecipeMessage.classList.add('no-recipe-message'); 
-        sectionElement.appendChild(noRecipeMessage);
+       
+    if (searchQuery.length >= 3) {
+        if (filteredRecipes.length === 0) {             
+                         
+            const noRecipeMessage = document.createElement('p');
+            noRecipeMessage.textContent = `Aucune recette ne contient "${searchQuery}". Vous pouvez chercher « tarte aux pommes », « poisson », etc... `;
+            noRecipeMessage.classList.add('no-recipe-message'); 
+            sectionElement.appendChild(noRecipeMessage);
+        } else {
+            recipeRender(filteredRecipes);
+        }
+        updateRecipeCountElement(filteredRecipes);
     } else {
+        const filteredRecipes = filterRecipes(recipes, TagList);
         recipeRender(filteredRecipes);
-    }
-    updateRecipeCountElement(filteredRecipes);
+        updateRecipeCountElement(filteredRecipes);
+    }     
 };
 
 
